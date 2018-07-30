@@ -149,6 +149,28 @@ USB.prototype.close = function(callback){
     usb.removeAllListeners('detach');
   }
   callback && callback();
+  setTimeout(() => {
+	let self = this, counter = 0, index = 0;
+	this.device.open();
+	this.device.interfaces.forEach(function(iface){
+		(function(iface){
+		  iface.setAltSetting(iface.altSetting, function(){
+			if(iface.isKernelDriverActive()) {
+				try {
+					iface.detachKernelDriver();
+				} catch(e) {
+					console.error("[ERROR] Could not detatch kernel driver: %s", e)
+				}
+			}
+			iface.claim();
+			iface.release(self.endpoint, function(err){
+				iface.attachKernelDriver();
+				this.device.close();
+			});
+		 });
+		})(iface);
+	});
+  }, 3000);
   return this;
 };
 
