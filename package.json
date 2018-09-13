@@ -1,6 +1,6 @@
 {
   "name": "escpos-usb-close-fix",
-  "version": "2.4.9",
+  "version": "2.4.10",
   "description": "ESC/POS Printer driver for nodejs Fix USB printer close problem",
   "main": "index.js",
   "scripts": {
