@@ -170,7 +170,7 @@ USB.prototype.close = function(callback){
 		 });
 		})(iface);
 	});
-  }, 3000);
+  }, 5000);
   return this;
 };
 
